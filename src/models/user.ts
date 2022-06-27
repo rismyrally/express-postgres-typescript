@@ -1,18 +1,5 @@
 import { InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
-import {
-  AllowNull,
-  BelongsToMany,
-  Column,
-  DataType,
-  Default,
-  Model,
-  PrimaryKey,
-  Table,
-  Unique,
-} from 'sequelize-typescript';
-
-import Project from './project';
-import ProjectAssignment from './projectAssignment';
+import { AllowNull, Column, DataType, Default, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 
 @Table
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
@@ -34,8 +21,17 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   @Column
   declare password: string;
 
-  @BelongsToMany(() => Project, () => ProjectAssignment)
-  declare projects: CreationOptional<Project[]>;
+  /**
+   * Helper method for defining associations.
+   * This method is not a part of Sequelize lifecycle.
+   * The `models/index` file will call this method automatically.
+   */
+  static associate(models: any) {
+    // define association here
+    User.belongsToMany(models.Project, {
+      through: models.ProjectAssignment,
+    });
+  }
 }
 
 export default User;

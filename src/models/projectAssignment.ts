@@ -8,11 +8,11 @@ import User from './user';
 class ProjectAssignment extends Model<InferAttributes<ProjectAssignment>, InferCreationAttributes<ProjectAssignment>> {
   @ForeignKey(() => User)
   @Column(DataType.UUID)
-  declare userId: string;
+  declare UserId: string;
 
   @ForeignKey(() => Project)
   @Column
-  declare projectId: number;
+  declare ProjectId: number;
 }
 
 export default ProjectAssignment;
