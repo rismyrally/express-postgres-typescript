@@ -1,8 +1,9 @@
 require('dotenv').config();
 
-const { PORT, DATABASE, DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD } = process.env;
+const { NODE_ENV, PORT, DATABASE, DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD } = process.env;
 
 module.exports = {
+  env: NODE_ENV,
   port: PORT,
   db: {
     name: DATABASE,

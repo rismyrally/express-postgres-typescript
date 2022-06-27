@@ -2,6 +2,7 @@ import nodeConfig from 'config';
 import { Dialect } from 'sequelize/types';
 
 interface Config {
+  env: string;
   port: number; // The port that the express server should bind to.
   db: {
     username: string;
@@ -21,6 +22,7 @@ const {
 } = nodeConfig.get<{ name: string; host: string; username: string; password: string; dialect: Dialect }>('db');
 
 const config: Config = {
+  env: nodeConfig.get<string>('env'),
   port: nodeConfig.get<number>('port'),
   db: {
     username,
