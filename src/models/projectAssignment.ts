@@ -1,40 +1,18 @@
-import { Model } from 'sequelize';
+import { InferAttributes, InferCreationAttributes } from 'sequelize';
+import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 
-interface ProjectAssignmentAttributes {
-  ProjectId: number;
-  UserId: string;
+import Project from './project';
+import User from './user';
+
+@Table
+class ProjectAssignment extends Model<InferAttributes<ProjectAssignment>, InferCreationAttributes<ProjectAssignment>> {
+  @ForeignKey(() => User)
+  @Column(DataType.UUID)
+  declare userId: string;
+
+  @ForeignKey(() => Project)
+  @Column
+  declare projectId: number;
 }
 
-module.exports = (sequelize: any, DataTypes: any) => {
-  class ProjectAssignment extends Model<ProjectAssignmentAttributes> implements ProjectAssignmentAttributes {
-    ProjectId!: number;
-    UserId!: string;
-  }
-  ProjectAssignment.init(
-    {
-      ProjectId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        references: {
-          model: 'Projects',
-          key: 'id',
-        },
-      },
-      UserId: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        primaryKey: true,
-        references: {
-          model: 'Users',
-          key: 'id',
-        },
-      },
-    },
-    {
-      sequelize,
-      modelName: 'ProjectAssignment',
-    },
-  );
-  return ProjectAssignment;
-};
+export default ProjectAssignment;

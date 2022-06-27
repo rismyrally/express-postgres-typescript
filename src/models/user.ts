@@ -1,57 +1,41 @@
-import { Model, UUIDV4 } from 'sequelize';
+import { InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
+import {
+  AllowNull,
+  BelongsToMany,
+  Column,
+  DataType,
+  Default,
+  Model,
+  PrimaryKey,
+  Table,
+  Unique,
+} from 'sequelize-typescript';
 
-interface UserAttributes {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
+import Project from './project';
+import ProjectAssignment from './projectAssignment';
+
+@Table
+class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+  @Default(DataType.UUIDV4)
+  @PrimaryKey
+  @Column(DataType.UUID)
+  declare id: CreationOptional<string>;
+
+  @AllowNull(false)
+  @Column
+  declare name: string;
+
+  @AllowNull(false)
+  @Unique
+  @Column
+  declare email: string;
+
+  @AllowNull(false)
+  @Column
+  declare password: string;
+
+  @BelongsToMany(() => Project, () => ProjectAssignment)
+  declare projects: CreationOptional<Project[]>;
 }
 
-module.exports = (sequelize: any, DataTypes: any) => {
-  class User extends Model<UserAttributes> implements UserAttributes {
-    id!: string;
-    name!: string;
-    email!: string;
-    password!: string;
-
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models: any) {
-      // define association here
-      User.belongsToMany(models.Project, {
-        through: 'ProjectAssignments',
-      });
-    }
-  }
-  User.init(
-    {
-      id: {
-        type: DataTypes.UUID,
-        defaultValue: UUIDV4,
-        allowNull: false,
-        primaryKey: true,
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      modelName: 'User',
-    },
-  );
-  return User;
-};
+export default User;
