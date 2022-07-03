@@ -1,3 +1,3 @@
-# node-typescript-starter
+# express-postgres-typescript
 
-RESTful API with Node.js, Express, and TypeScript
+RESTful API with Node.js, Express, Postgres and TypeScript

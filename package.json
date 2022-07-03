@@ -1,7 +1,7 @@
 {
-  "name": "node-typescript-starter",
+  "name": "node-postgres-typescript",
   "version": "1.0.0",
-  "description": "RESTful API with Node.js, Express, and TypeScript",
+  "description": "RESTful API with Node.js, Express, Postgres and TypeScript",
   "main": "index.js",
   "scripts": {
     "build": "tsc --project ./",
@@ -11,7 +11,7 @@
     "lint:fix": "eslint src/**/*.ts --fix",
     "prepare": "husky install"
   },
-  "repository": "https://github.com/rismyrally/node-typescript-starter",
+  "repository": "https://github.com/rismyrally/express-postgres-typescript",
   "author": "Rismy Rally",
   "license": "MIT",
   "dependencies": {
