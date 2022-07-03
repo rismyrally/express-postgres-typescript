@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import Project from './project';
+import type Project from './project';
 
 @Entity()
 class User extends BaseEntity {
@@ -25,7 +25,7 @@ class User extends BaseEntity {
   @Column()
   password!: string;
 
-  @ManyToMany(() => Project, (project) => project.users)
+  @ManyToMany('Project', 'users')
   @JoinTable({ name: 'project_assignments' })
   projects?: Project[];
 

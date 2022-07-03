@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import User from './user';
+import type User from './user';
 
 @Entity()
 class Project extends BaseEntity {
@@ -21,7 +21,7 @@ class Project extends BaseEntity {
   @Column()
   status!: string;
 
-  @ManyToMany(() => User, (user) => user.projects)
+  @ManyToMany('User', 'projects')
   users?: User[];
 
   @CreateDateColumn()
