@@ -1,33 +1,22 @@
-import fs from 'fs';
-import path from 'path';
-
-import { Sequelize, DataTypes } from 'sequelize';
+import 'reflect-metadata';
+import { DataSource } from 'typeorm';
 
 import config from '@/config';
 
-const basename = path.basename(__filename);
+import Project from './project';
+import User from './user';
 
-const sequelize = new Sequelize(config.db);
+const { env, db } = config;
+const isDev = env === 'development';
 
-const models: {
-  [key: string]: any;
-} = {};
-
-fs.readdirSync(__dirname)
-  .filter((file) => {
-    return file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.ts';
-  })
-  .forEach((file) => {
-    const model = require(path.join(__dirname, file))(sequelize, DataTypes);
-    models[model.name] = model;
-  });
-
-Object.keys(models).forEach((modelName) => {
-  if (models[modelName].associate) {
-    models[modelName].associate(models);
-  }
+const AppDataSource = new DataSource({
+  type: db.dialect,
+  ...db,
+  entities: [User, Project],
+  synchronize: isDev,
+  logging: isDev,
 });
 
-export { sequelize };
+export { User, Project };
 
-export default models;
+export default AppDataSource;

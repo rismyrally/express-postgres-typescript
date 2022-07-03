@@ -1,5 +1,4 @@
 import nodeConfig from 'config';
-import { Dialect } from 'sequelize/types';
 
 interface Config {
   env: string;
@@ -9,7 +8,7 @@ interface Config {
     password: string;
     database: string;
     host: string;
-    dialect: Dialect;
+    dialect: never;
   };
 }
 
@@ -19,7 +18,7 @@ const {
   username,
   password,
   dialect,
-} = nodeConfig.get<{ name: string; host: string; username: string; password: string; dialect: Dialect }>('db');
+} = nodeConfig.get<{ name: string; host: string; username: string; password: string; dialect: never }>('db');
 
 const config: Config = {
   env: nodeConfig.get<string>('env'),
