@@ -4,16 +4,14 @@
     "node": true,
     "es2021": true
   },
-  "extends": ["eslint:recommended", "prettier"],
-  "plugins": ["prettier", "import"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
+  "plugins": ["@typescript-eslint", "import"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module"
   },
   "rules": {
-    "prettier/prettier": "error",
-
     // eslint
     "no-var": "error",
     "prefer-const": "error",

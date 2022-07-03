@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 require('dotenv').config();
 
 const { NODE_ENV, PORT, DATABASE, DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD } = process.env;
