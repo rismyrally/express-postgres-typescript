@@ -1,50 +1,34 @@
-import { Model } from 'sequelize';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-interface ProjectAttributes {
-  id: number;
-  title: string;
-  status: string;
+import User from './user';
+
+@Entity()
+class Project extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
+  @Column()
+  title!: string;
+
+  @Column()
+  status!: string;
+
+  @ManyToMany(() => User, (user) => user.projects)
+  users?: User[];
+
+  @CreateDateColumn()
+  createdAt?: Date;
+
+  @UpdateDateColumn()
+  updatedAt?: Date;
 }
 
-module.exports = (sequelize: any, DataTypes: any) => {
-  class Project extends Model<ProjectAttributes> implements ProjectAttributes {
-    id!: number;
-    title!: string;
-    status!: string;
-
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models: any) {
-      // define association here
-      Project.belongsToMany(models.User, {
-        through: 'ProjectAssignments',
-      });
-    }
-  }
-  Project.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      title: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      status: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      modelName: 'Project',
-    },
-  );
-  return Project;
-};
+export default Project;
