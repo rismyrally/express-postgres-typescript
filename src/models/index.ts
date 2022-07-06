@@ -6,12 +6,18 @@ import config from '@/config';
 import Project from './project';
 import User from './user';
 
-const { env, db } = config;
+const {
+  env,
+  db: { dialect, database, host, username, password },
+} = config;
 const isDev = env === 'development';
 
 const AppDataSource = new DataSource({
-  type: db.dialect,
-  ...db,
+  type: dialect,
+  database,
+  host,
+  username,
+  password,
   entities: [User, Project],
   synchronize: isDev,
   logging: isDev,

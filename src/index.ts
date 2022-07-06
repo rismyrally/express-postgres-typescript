@@ -5,14 +5,21 @@ import AppDataSource from './models';
 
 const { port } = config;
 
-(async () => {
+const initializeDatabase = async (): Promise<void> => {
   try {
     await AppDataSource.initialize();
     console.log(`Conntected to the database`);
-    app.listen(port, (): void => {
-      console.log(`Server is listening on port ${port}`);
-    });
   } catch (error) {
-    console.error(error);
+    console.error(`Failed to conntect to the database`, error);
   }
-})();
+};
+
+const start = async (): Promise<void> => {
+  await initializeDatabase();
+
+  app.listen(port, (): void => {
+    console.log(`Server is listening on port ${port}`);
+  });
+};
+
+start();
